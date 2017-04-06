@@ -5,6 +5,8 @@ public enum Tipo {
 	SEDAN("SEDAN"),
 	HATCH("HATCH");
 	
+	public static final Tipo[] ALL = { SEDAN, HATCH };
+	
 	private String nome;
 	
 	private Tipo(String nome){

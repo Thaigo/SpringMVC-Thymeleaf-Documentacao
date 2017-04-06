@@ -35,7 +35,7 @@ public class Carro {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_carro")
-	private Tipo tipo;
+	private Tipo[] tipo;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "recurso")
@@ -68,11 +68,11 @@ public class Carro {
 		this.novo = novo;
 	}
 
-	public Tipo getTipo() {
+	public Tipo[] getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(Tipo tipo) {
+	public void setTipo(Tipo[] tipo) {
 		this.tipo = tipo;
 	}
 
