@@ -1,7 +1,7 @@
 package com.stcar.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,8 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Type;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Carro {
@@ -26,20 +24,19 @@ public class Carro {
 	@GeneratedValue
 	private Integer id;
 	
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd-MM-yyyy")	
-	private Date dateCar;
+	@Column(name = "data_carro")	
+	private LocalDateTime dateCar;
 	
-	@Type(type="sim_nao")
+	
 	private Boolean novo;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_carro")
-	private Tipo[] tipo;
+	private Tipo tipo;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "recurso")
-	private Recurso[] recurso;
+	private Recurso recursos;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="carro", fetch=FetchType.EAGER)
 	private List<Row> rows = new ArrayList<Row>();
@@ -52,11 +49,13 @@ public class Carro {
 		this.id = id;
 	}
 
-	public Date getDateCar() {
+	
+
+	public LocalDateTime getDateCar() {
 		return dateCar;
 	}
 
-	public void setDateCar(Date dateCar) {
+	public void setDateCar(LocalDateTime dateCar) {
 		this.dateCar = dateCar;
 	}
 
@@ -68,20 +67,22 @@ public class Carro {
 		this.novo = novo;
 	}
 
-	public Tipo[] getTipo() {
+	public Tipo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(Tipo[] tipo) {
+	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
 
-	public Recurso[] getRecurso() {
-		return recurso;
+	
+
+	public Recurso getRecursos() {
+		return recursos;
 	}
 
-	public void setRecurso(Recurso[] recurso) {
-		this.recurso = recurso;
+	public void setRecursos(Recurso recursos) {
+		this.recursos = recursos;
 	}
 
 	public List<Row> getRows() {

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- Compiled and minified CSS -->
+
+    
+  </head>
+  <body>
+  <div>
+  <h2>Lista de Carros</h2>
+  
+  <table border = "1" >
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Novo</th>
+            <th>Tipo</th>
+            <th>Recursos</th>
+            <th>Rows</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="car : ${allCarros}" >
+            <td th:text="${car.dateCar}" > </td>
+            <td th:text="${car.novo}" >sim</td>
+            <td th:text="${car.tipo}" >Wireframe</td>
+            <td>Gastador de combustivel</td>
+            <td>
+              <table >
+                <tbody>
+                  <tr th:each="row,rowStat : ${car.rows}">
+                    <td th:text="${rowStat.count}">1</td>
+                    <td th:text="${row.variedade.nome}">Vespa</td>
+                    <td th:text="${row.quantidade}">12</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  <hr />
+  
+  <div>
+    
+      <h2>Add Novo Carro</h2>
+
+      <form action="#" th:action="@{/carros}" th:object="${carro}" method="post">
+      
+      <fieldset>          
+          <legend>Dados do carro</legend>
+          
+          <div>
+            <label for="dateCar">
+              <span>Data</span>
+              (<span>YYYY/MM/DD</span>)
+            </label>
+            <input type="text" th:field="*{dateCar}"  />
+          </div>
+          
+          <br/>
+          
+          <div>
+            <label>Carro é Novo ?</label>
+            <input type="checkbox" th:field="*{novo}" /> (Sim)
+          </div>
+          
+           <br/>
+          
+          <div>
+            <label>Tipo:</label>
+            <select th:field="*{tipo}">
+              <option value="">Selecione o Tipo</option>
+              <option th:each="tipo : ${allTipos}" th:value="${tipo}" th:text="${tipo.nome}">Wireframe</option>
+            </select>
+          </div>
+          
+           <br/>
+          
+          <div>
+            <label>Recursos:</label>
+            <ul>
+              <li th:each="feat : ${allRecursos}">
+                <input type="checkbox" th:field="*{recursos}" th:value="${feat}" />
+                <label th:for="${('recursos')}" th:text="${feat.nome}">Ar Condicionado</label>
+              </li>
+              <li th:remove="all">
+                <input id="removed1" type="checkbox" /> <label for="removed1">Turf</label>
+              </li>
+            </ul>
+          </div>
+          
+           <br/>
+          
+          <div>            
+            <table>
+              <thead>
+                <tr>
+                  <th>Row</th>
+                  <th>Variedade</th>
+                  <th>Quantidade</th>
+                  <th>
+                    <button type="submit" name="addRow">Add row</button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="row,rowStat : *{rows}">
+                  <td th:text="${rowStat.count}">1</td>
+                  <td>
+                    <select th:field="*{rows[__${rowStat.index}__].variedade}">
+                      <option th:each="var : ${allVariedades}" th:value="${var.id}" th:text="${var.nome}">Fusca</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" th:field="*{rows[__${rowStat.index}__].quantidade}"  />
+                  </td>
+                  <td>
+                    <button type="submit" name="removeRow" th:value="${rowStat.index}">Remove row</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+           <br/>
+          
+          <div class="submit">
+            <button type="submit" name="save" >Salvar Carro</button>    
+          </div>
+          
+      </fieldset>
+      </form>
+  </div> 
+  </body>
+  </html>

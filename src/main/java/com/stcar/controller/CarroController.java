@@ -32,41 +32,41 @@ public class CarroController {
 	
 	
 	
-	@ModelAttribute("AllTipos")
+	@ModelAttribute("allTipos")
 	public List<Tipo> populaTipos() {
 		return Arrays.asList(Tipo.ALL);
 	}
 	
-	@ModelAttribute("AllRecursos")
+	@ModelAttribute("allRecursos")
 	public List<Recurso> populaRecursos() {
 		return Arrays.asList(Recurso.ALL);
 	}
 	
-	@ModelAttribute("AllVariedades")
+	@ModelAttribute("allVariedades")
 	public List<Variedade> populaVariedades() {
 		return this.variedadeService.findAll();
 	}
 	
-	@ModelAttribute("AllCarros")
+	@ModelAttribute("allCarros")
 	public List<Carro> populaCarros() {
 		return this.carroService.findAll();
 	}
 	
 	@RequestMapping({"/", "/carros"})
-	public String showCarros(Carro carro) {
-		carro.setDateCar(Calendar.getInstance().getTime());
+	public String showCarros(Carro carro) {	
+		
 		return "carros";
 	}
 	
 	@RequestMapping(value = "/carros", params={"save"})
-	public String saveCar(Carro carro, ModelMap model) {
+	public String saveCar(Carro carro, ModelMap model ) {
 		this.carroService.add(carro);
 		model.clear();
 		return "redirect:/carros";
 	}
 	
 	@RequestMapping(value = "/carros", params={"addRow"})
-	public String addRow(Carro carro) {
+	public String addRow(Carro carro, final BindingResult bindingResult) {
 		carro.getRows().add(new Row());
 		return "carros";
 	}
