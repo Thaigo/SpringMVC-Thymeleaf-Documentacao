@@ -1,3 +1,4 @@
+package com.stcar.model;
 
 public enum Recurso {
 	
