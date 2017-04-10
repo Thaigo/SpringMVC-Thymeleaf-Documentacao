@@ -21,5 +21,9 @@ public class CarroService {
 	public Carro add(Carro carro) {
 		return this.carroRepository.save(carro);
 	}
+	
+	public Carro findById(Integer id) {
+		return this.carroRepository.findOne(id);
+	}
 
 }

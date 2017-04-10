@@ -16,30 +16,34 @@
   <table border = "1" >
         <thead>
           <tr>
+            <th>ID</th>
             <th>Data</th>
             <th>Novo</th>
             <th>Tipo</th>
-            <th>Recursos</th>
+            <th>Nome</th>
             <th>Rows</th>
+            <th>Açoes</th>
           </tr>
         </thead>
         <tbody>
           <tr th:each="car : ${allCarros}" >
-            <td th:text="${car.dateCar}" > </td>
-            <td th:text="${car.novo}" >sim</td>
+            <td th:text="${car.id}" > </td>
+            <td th:text="${{car.dateCar}}" > </td>
+            <td th:text="${car.novo}? #{bool.true} : #{bool.false}" >sim</td>
             <td th:text="${car.tipo}" >Wireframe</td>
-            <td>Gastador de combustivel</td>
+            <td th:text="${car.nome}" >Nome</td>
             <td>
               <table >
                 <tbody>
                   <tr th:each="row,rowStat : ${car.rows}">
                     <td th:text="${rowStat.count}">1</td>
-                    <td th:text="${row.variedade.nome}">Vespa</td>
-                    <td th:text="${row.quantidade}">12</td>
+                    <td th:text="${row.variedade.nome}">Ar condicionado</td>                    
                   </tr>
+                  
                 </tbody>
               </table>
             </td>
+            <td><a th:href="@{/carros/show/{id}(id=${car.id})}" >Mostrar Detalhes</a></td>
           </tr>
         </tbody>
       </table>
@@ -55,10 +59,14 @@
       <fieldset>          
           <legend>Dados do carro</legend>
           
+           <div>            
+            <input type="hidden" th:field="*{id}" /> 
+          </div>
+          
           <div>
             <label for="dateCar">
               <span>Data</span>
-              (<span>YYYY/MM/DD</span>)
+              (<span>MM/dd/yyyy</span>)
             </label>
             <input type="text" th:field="*{dateCar}"  />
           </div>
@@ -83,17 +91,10 @@
            <br/>
           
           <div>
-            <label>Recursos:</label>
-            <ul>
-              <li th:each="feat : ${allRecursos}">
-                <input type="checkbox" th:field="*{recursos}" th:value="${feat}" />
-                <label th:for="${('recursos')}" th:text="${feat.nome}">Ar Condicionado</label>
-              </li>
-              <li th:remove="all">
-                <input id="removed1" type="checkbox" /> <label for="removed1">Turf</label>
-              </li>
-            </ul>
+            <label>Nome</label>
+            <input type="text" th:field="*{nome}" />
           </div>
+          
           
            <br/>
           
@@ -102,8 +103,7 @@
               <thead>
                 <tr>
                   <th>Row</th>
-                  <th>Variedade</th>
-                  <th>Quantidade</th>
+                  <th>Opcionais</th>                  
                   <th>
                     <button type="submit" name="addRow">Add row</button>
                   </th>
@@ -117,9 +117,7 @@
                       <option th:each="var : ${allVariedades}" th:value="${var.id}" th:text="${var.nome}">Fusca</option>
                     </select>
                   </td>
-                  <td>
-                    <input type="text" th:field="*{rows[__${rowStat.index}__].quantidade}"  />
-                  </td>
+                  
                   <td>
                     <button type="submit" name="removeRow" th:value="${rowStat.index}">Remove row</button>
                   </td>

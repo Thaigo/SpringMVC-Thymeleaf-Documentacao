@@ -1,7 +1,7 @@
 package com.stcar.model;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,33 +12,40 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 @Entity
+@Table(name="carros")
 public class Carro {
 	
 	@Id
 	@GeneratedValue
 	private Integer id;
 	
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	@Temporal(TemporalType.DATE)
 	@Column(name = "data_carro")	
-	private LocalDateTime dateCar;
+	private Date dateCar;
 	
-	
+	private String nome;
 	private Boolean novo;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_carro")
-	private Tipo tipo;
+	private Tipo tipo;	
 	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "recurso")
-	private Recurso recursos;
-	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="carro", fetch=FetchType.EAGER)
+		
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "carros_rows", joinColumns = { @JoinColumn(name = "carro_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "row_id") })
 	private List<Row> rows = new ArrayList<Row>();
 
 	public Integer getId() {
@@ -47,15 +54,15 @@ public class Carro {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
+	}	
 
 	
 
-	public LocalDateTime getDateCar() {
+	public Date getDateCar() {
 		return dateCar;
 	}
 
-	public void setDateCar(LocalDateTime dateCar) {
+	public void setDateCar(Date dateCar) {
 		this.dateCar = dateCar;
 	}
 
@@ -73,16 +80,16 @@ public class Carro {
 
 	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
-	}
+	}	
 
 	
 
-	public Recurso getRecursos() {
-		return recursos;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setRecursos(Recurso recursos) {
-		this.recursos = recursos;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public List<Row> getRows() {

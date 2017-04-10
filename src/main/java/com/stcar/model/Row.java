@@ -1,12 +1,18 @@
 package com.stcar.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="rows")
 public class Row {
 
 	@Id
@@ -17,12 +23,10 @@ public class Row {
 	@JoinColumn
 	private Variedade variedade;
 	
-	private Integer quantidade;
+	@ManyToMany( mappedBy = "rows")
+	private List<Carro> carros = new ArrayList<Carro>();
 	
-	@ManyToOne
-	@JoinColumn
-	private Carro carro;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -39,21 +43,17 @@ public class Row {
 		this.variedade = variedade;
 	}
 
-	public Integer getQuantidade() {
-		return quantidade;
+	public List<Carro> getCarros() {
+		return carros;
 	}
 
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
+	public void setCarros(List<Carro> carros) {
+		this.carros = carros;
 	}
 
-	public Carro getCarro() {
-		return carro;
-	}
-
-	public void setCarro(Carro carro) {
-		this.carro = carro;
-	}
+	
+	
+	
 	
 	
 
