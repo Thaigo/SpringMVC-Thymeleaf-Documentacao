@@ -30,7 +30,7 @@ public class Carro {
 	@GeneratedValue
 	private Integer id;
 	
-	@DateTimeFormat(pattern = "MM/dd/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_carro")	
 	private Date dateCar;
